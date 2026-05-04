@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Free Receipt Template for Small Business | Editable & Printable",
   description:
-    "Use a free receipt template for small business needs. Choose a professional layout, edit key fields, and print or export a polished receipt in minutes.",
+    "Create a free receipt template for small business use. Choose a layout, edit business and customer details, update totals live, and print a polished receipt in minutes.",
 };
 
 export default function RootLayout({
