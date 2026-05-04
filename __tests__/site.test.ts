@@ -38,13 +38,15 @@ describe("site URL SEO helpers", () => {
     ]);
 
     const metadata = getSiteMetadata({
-      title: "Free Receipt Template for Small Business | Editable & Printable",
+      title: "Receipt Template Generator for Small Business | Free Printable Receipt",
       description: "Create polished receipts.",
       pathname: "/",
     });
 
     expect(metadata.metadataBase?.toString()).toBe("https://receipts.example.com/");
     expect(metadata.alternates?.canonical).toBe("/");
+
+    const sitemap = sitemapModule.default();
 
     expect(robotsModule.default()).toEqual({
       rules: {
@@ -55,13 +57,113 @@ describe("site URL SEO helpers", () => {
       host: "https://receipts.example.com",
     });
 
-    expect(sitemapModule.default()).toEqual([
-      {
-        url: "https://receipts.example.com",
-        lastModified: expect.any(Date),
-        changeFrequency: "weekly",
-        priority: 1,
-      },
+    expect(sitemap).toEqual(
+      expect.arrayContaining([
+        {
+          url: "https://receipts.example.com",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 1,
+        },
+        {
+          url: "https://receipts.example.com/rent-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/cash-payment-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/donation-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/service-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/payment-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/editable-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/printable-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/sales-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/blank-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+        {
+          url: "https://receipts.example.com/itemized-receipt-template",
+          lastModified: expect.any(Date),
+          changeFrequency: "weekly",
+          priority: 0.9,
+        },
+      ]),
+    );
+  });
+
+  test("exposes homepage and long-tail landing page SEO configs", async () => {
+    const { landingPages, receiptLandingPageSlugs } = await import("@/lib/landing-pages");
+
+    expect(receiptLandingPageSlugs).toEqual([
+      "rent-receipt-template",
+      "cash-payment-receipt-template",
+      "donation-receipt-template",
+      "service-receipt-template",
+      "payment-receipt-template",
+      "editable-receipt-template",
+      "printable-receipt-template",
+      "sales-receipt-template",
+      "blank-receipt-template",
+      "itemized-receipt-template",
     ]);
+
+    expect(landingPages.home.jumpLinks.map((item) => item.href)).toEqual([
+      "#editor",
+      "#templates",
+      "#receipt-fields",
+      "#use-cases",
+      "#faq",
+    ]);
+    expect(landingPages.home.structuredData.breadcrumb.itemListElement).toHaveLength(1);
+    expect(landingPages.home.structuredData.faq.mainEntity).toHaveLength(5);
+
+    expect(landingPages["rent-receipt-template"].metadata.pathname).toBe("/rent-receipt-template");
+    expect(landingPages["cash-payment-receipt-template"].h1).toMatch(/cash payment receipt template/i);
+    expect(landingPages["service-receipt-template"].faqHeading).toMatch(/service receipt/i);
+    expect(landingPages["payment-receipt-template"].h1).toMatch(/payment receipt template/i);
+    expect(landingPages["editable-receipt-template"].title).toMatch(/editable receipt template/i);
+    expect(landingPages["printable-receipt-template"].ctaHeading).toMatch(/print/i);
+    expect(landingPages["sales-receipt-template"].fieldsHeading).toMatch(/sales receipt/i);
+    expect(landingPages["blank-receipt-template"].useCasesHeading).toMatch(/blank receipt/i);
+    expect(landingPages["itemized-receipt-template"].faqHeading).toMatch(/itemized receipt/i);
+    expect(landingPages.home.relatedPages).toHaveLength(6);
   });
 });

@@ -19,6 +19,22 @@ describe("Home page receipt workflow", () => {
     expect(screen.getByRole("radio", { name: /classic receipt/i })).toBeDefined();
   });
 
+  test("renders homepage jump links, faq section, related templates, and a single how-it-works section", () => {
+    const { container } = render(<Home />);
+
+    expect(screen.getByRole("link", { name: /jump to editor/i }).getAttribute("href")).toBe("#editor");
+    expect(screen.getByRole("link", { name: /required receipt fields/i }).getAttribute("href")).toBe(
+      "#receipt-fields",
+    );
+    expect(screen.getByRole("heading", { level: 2, name: /frequently asked questions/i })).toBeDefined();
+    expect(screen.getByRole("heading", { level: 2, name: /related receipt templates/i })).toBeDefined();
+    expect(screen.getByRole("link", { name: /payment receipt template/i })).toBeDefined();
+    expect(screen.getByRole("link", { name: /editable receipt template/i })).toBeDefined();
+    expect(screen.getByRole("link", { name: /itemized receipt template/i })).toBeDefined();
+    expect(container.querySelectorAll("#how-it-works")).toHaveLength(1);
+    expect(container.querySelectorAll("#faq")).toHaveLength(1);
+  });
+
   test("updates the live preview when the business name changes", async () => {
     const { userEvent } = await import("@testing-library/user-event");
     render(<Home />);

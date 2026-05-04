@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   calculateReceiptTotals,
@@ -10,20 +11,19 @@ import {
   type ReceiptItem,
   type ReceiptTemplateId,
 } from "@/lib/receipt";
+import {
+  getLandingPageStructuredData,
+  type ReceiptLandingPageConfig,
+} from "@/lib/landing-pages";
 
-const fields = [
-  "Business name and contact details",
-  "Receipt number and issue date",
-  "Customer name or walk-in label",
-  "Products or services provided",
-  "Subtotal, taxes, and final total",
-  "Payment method and notes",
-];
+type ReceiptWorkflowProps = {
+  page: ReceiptLandingPageConfig;
+};
 
 const steps = [
   {
     title: "Choose a receipt style",
-    desc: "Start with a layout that matches how your small business sells, serves, or invoices customers.",
+    desc: "Start with a layout that matches how your small business sells, serves, or documents payments.",
   },
   {
     title: "Edit your receipt details",
@@ -35,44 +35,11 @@ const steps = [
   },
 ];
 
-const useCases = [
-  "Retail stores issuing quick in-person purchase receipts",
-  "Freelancers sending simple proof of payment after a job",
-  "Home service businesses documenting cash or card payments",
-  "Studios, salons, and local shops that need a clean printable receipt",
-];
-
-const reassurancePoints = [
-  "No signup wall or multi-page flow",
-  "Live totals stay in sync while you edit",
-  "Print layout stays clean for customer handoff",
-];
-
-const faqs = [
-  {
-    question: "Is this receipt template really free?",
-    answer:
-      "Yes. You can use the editor on this page to fill out a receipt, switch templates, and print a clean copy for free.",
-  },
-  {
-    question: "Can I edit the receipt fields?",
-    answer:
-      "Yes. You can change business details, customer information, line items, payment method, notes, and tax rate in the form.",
-  },
-  {
-    question: "Can I print the receipt after filling it out?",
-    answer:
-      "Yes. The receipt preview updates live and the print action opens your browser print dialog for a paper-ready layout.",
-  },
-  {
-    question: "Who is this receipt template for?",
-    answer:
-      "It is designed for small businesses, freelancers, local service providers, retail shops, and other owners who need a simple professional receipt.",
-  },
-];
-
-export function ReceiptWorkflow() {
-  const [formData, setFormData] = useState<ReceiptFormData>(defaultReceiptData);
+export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
+  const [formData, setFormData] = useState<ReceiptFormData>({
+    ...defaultReceiptData,
+    templateId: page.defaultTemplateId ?? defaultReceiptData.templateId,
+  });
 
   const activeTemplate =
     receiptTemplates.find((template) => template.id === formData.templateId) ?? receiptTemplates[0];
@@ -81,6 +48,8 @@ export function ReceiptWorkflow() {
     () => calculateReceiptTotals({ items: formData.items, taxRate: formData.taxRate }),
     [formData.items, formData.taxRate],
   );
+
+  const structuredData = getLandingPageStructuredData(page);
 
   function updateField<Key extends keyof ReceiptFormData>(key: Key, value: ReceiptFormData[Key]) {
     setFormData((current) => ({ ...current, [key]: value }));
@@ -138,23 +107,28 @@ export function ReceiptWorkflow() {
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.12),_transparent_30%),linear-gradient(180deg,#f8f7f4_0%,#f1eee7_100%)] text-stone-900 print:bg-white">
-      <section className="mx-auto flex max-w-7xl flex-col gap-16 px-6 py-16 lg:px-10 lg:py-20 print:max-w-none print:px-0 print:py-0">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.faq) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.breadcrumb) }}
+      />
+
+      <section className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-16 lg:px-10 lg:py-20 print:max-w-none print:px-0 print:py-0">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start print:block">
           <div className="space-y-6 print:hidden">
             <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-900">
-              Editable receipt workflow · Live preview · Print-ready
+              {page.heroEyebrow}
             </span>
             <div className="space-y-4">
               <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-                Free Receipt Template for Small Business
+                {page.h1}
               </h1>
-              <p className="max-w-2xl text-lg leading-8 text-stone-600">
-                Build a polished receipt in minutes. Pick a template, edit the business and customer
-                details, adjust line items, and print a professional record without leaving the page.
-              </p>
+              <p className="max-w-2xl text-lg leading-8 text-stone-600">{page.intro}</p>
               <p className="max-w-2xl text-sm leading-7 text-stone-500 sm:text-base">
-                Ideal for quick storefront sales, local service visits, and freelance work when you need
-                a proof-of-payment receipt that is editable first and paper-ready when you print.
+                {page.supportingCopy}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -173,7 +147,7 @@ export function ReceiptWorkflow() {
               </button>
             </div>
             <ul className="grid gap-3 pt-2 text-sm text-stone-600 sm:grid-cols-3">
-              {reassurancePoints.map((item) => (
+              {page.reassurancePoints.map((item) => (
                 <li key={item} className="rounded-2xl border border-stone-200 bg-white px-4 py-3 shadow-sm">
                   {item}
                 </li>
@@ -266,12 +240,26 @@ export function ReceiptWorkflow() {
           </div>
         </div>
 
+        {page.jumpLinks.length > 0 ? (
+          <nav aria-label="Page shortcuts" className="print:hidden">
+            <div className="flex flex-wrap gap-3">
+              {page.jumpLinks.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm text-stone-700 shadow-sm transition hover:border-stone-300 hover:text-stone-900"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </nav>
+        ) : null}
+
         <section id="templates" className="space-y-5 print:hidden">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold sm:text-3xl">Choose a receipt template</h2>
-            <p className="max-w-3xl text-stone-600">
-              Start with the layout that best fits how your small business sells, serves, or invoices.
-            </p>
+            <p className="max-w-3xl text-stone-600">{page.templateIntro}</p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {receiptTemplates.map((template) => {
@@ -314,12 +302,8 @@ export function ReceiptWorkflow() {
           <div className="space-y-6">
             <div>
               <h2 className="text-2xl font-semibold sm:text-3xl">Edit your receipt</h2>
-              <p className="mt-3 max-w-2xl text-stone-600">
-                Fill in the fields that matter, tweak your totals, and keep the preview in sync as you type.
-              </p>
-              <p className="mt-2 text-sm text-stone-500">
-                Make your edits here, then use the live preview above to confirm the final print version.
-              </p>
+              <p className="mt-3 max-w-2xl text-stone-600">{page.editorIntro}</p>
+              <p className="mt-2 text-sm text-stone-500">{page.editorTip}</p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -396,7 +380,7 @@ export function ReceiptWorkflow() {
             <div className="mb-4 flex items-center justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-semibold">Line items and totals</h2>
-                <p className="mt-2 text-sm text-stone-600">Add up to a few items for a tight MVP flow.</p>
+                <p className="mt-2 text-sm text-stone-600">Add a few items for a quick printable receipt.</p>
               </div>
               <button
                 type="button"
@@ -484,16 +468,14 @@ export function ReceiptWorkflow() {
           </div>
         </section>
 
-        <section className="grid gap-6 rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm lg:grid-cols-[0.95fr_1.05fr] print:hidden">
+        <section id="receipt-fields" className="grid gap-6 rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm lg:grid-cols-[0.95fr_1.05fr] print:hidden">
           <div>
-            <h2 className="text-2xl font-semibold sm:text-3xl">Edit the fields that matter</h2>
-            <p className="mt-3 text-stone-600">
-              This receipt template is built around the information most small businesses need for clean records and customer proof of payment.
-            </p>
+            <h2 className="text-2xl font-semibold sm:text-3xl">{page.fieldsHeading}</h2>
+            <p className="mt-3 text-stone-600">{page.fieldsIntro}</p>
           </div>
           <div>
             <ul className="grid gap-3 text-sm text-stone-700 sm:grid-cols-2">
-              {fields.map((field) => (
+              {page.fields.map((field) => (
                 <li key={field} className="rounded-2xl bg-stone-50 px-4 py-3">
                   {field}
                 </li>
@@ -505,7 +487,7 @@ export function ReceiptWorkflow() {
         <section id="how-it-works" className="space-y-5 print:hidden">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold sm:text-3xl">How it works</h2>
-            <p className="max-w-3xl text-stone-600">A simple path from blank template to a professional small business receipt.</p>
+            <p className="max-w-3xl text-stone-600">{page.howItWorksIntro}</p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {steps.map((step, index) => (
@@ -520,15 +502,13 @@ export function ReceiptWorkflow() {
           </div>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start print:hidden">
+        <section id="use-cases" className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start print:hidden">
           <div className="space-y-3">
-            <h2 className="text-2xl font-semibold sm:text-3xl">Built for everyday small business use</h2>
-            <p className="text-stone-600">
-              Whether you run a local shop or a solo service business, a clear receipt helps you look professional and stay organized.
-            </p>
+            <h2 className="text-2xl font-semibold sm:text-3xl">{page.useCasesHeading}</h2>
+            <p className="text-stone-600">{page.useCasesIntro}</p>
           </div>
           <ul className="grid gap-3 text-sm text-stone-700 sm:grid-cols-2">
-            {useCases.map((item) => (
+            {page.useCases.map((item) => (
               <li key={item} className="rounded-full border border-stone-200 bg-white px-4 py-3 shadow-sm">
                 {item}
               </li>
@@ -536,33 +516,36 @@ export function ReceiptWorkflow() {
           </ul>
         </section>
 
-        <section id="how-it-works" className="space-y-5 print:hidden">
+        <section className="space-y-5 print:hidden">
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold sm:text-3xl">How it works</h2>
-            <p className="max-w-3xl text-stone-600">A simple path from blank template to a professional small business receipt.</p>
+            <h2 className="text-2xl font-semibold sm:text-3xl">Related receipt templates</h2>
+            <p className="max-w-3xl text-stone-600">
+              Explore adjacent receipt layouts to match different payment workflows and search intents.
+            </p>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <article key={step.title} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-stone-900 text-sm font-semibold text-white">
-                  0{index + 1}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-stone-600">{step.desc}</p>
-              </article>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {page.relatedPages.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
+              >
+                <h3 className="text-lg font-semibold text-stone-900">{item.label}</h3>
+                <p className="mt-2 text-sm leading-7 text-stone-600">
+                  Open this landing page for a more specific receipt workflow and printable setup.
+                </p>
+              </Link>
             ))}
           </div>
         </section>
 
-        <section className="space-y-5 print:hidden">
+        <section id="faq" className="space-y-5 print:hidden">
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold sm:text-3xl">Frequently asked questions</h2>
-            <p className="max-w-3xl text-stone-600">
-              Common questions about using a free editable and printable receipt template.
-            </p>
+            <h2 className="text-2xl font-semibold sm:text-3xl">{page.faqHeading}</h2>
+            <p className="max-w-3xl text-stone-600">{page.faqIntro}</p>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            {faqs.map((faq) => (
+            {page.faqs.map((faq) => (
               <article key={faq.question} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
                 <h3 className="text-lg font-semibold">{faq.question}</h3>
                 <p className="mt-3 text-sm leading-7 text-stone-600">{faq.answer}</p>
@@ -577,10 +560,10 @@ export function ReceiptWorkflow() {
               Ready to finish your receipt?
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
-              Create your receipt and print it in minutes
+              {page.ctaHeading}
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-stone-600 sm:text-base">
-              Choose a layout, edit the details, and use the print-ready version on this page for fast customer handoff or bookkeeping.
+              {page.ctaCopy}
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
