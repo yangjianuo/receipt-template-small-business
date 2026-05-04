@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Receipt Template for Small Business | MVP Setup",
+  title: "Free Receipt Template for Small Business | Editable & Printable",
   description:
-    "Standalone MVP project for editable and printable receipt templates for small businesses.",
+    "Use a free receipt template for small business needs. Choose a professional layout, edit key fields, and print or export a polished receipt in minutes.",
 };
 
 export default function RootLayout({
