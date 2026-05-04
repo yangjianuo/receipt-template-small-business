@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ReceiptWorkflow } from "@/components/receipt-workflow";
 
 export const metadata: Metadata = {
-  title: "Free Receipt Template for Small Business | Editable & Printable",
+  title: "Free Receipt Template for Small Business | Printable & Editable",
   description:
-    "Create a free receipt template for small business use. Choose a layout, edit business and customer details, update totals live, and print a polished receipt in minutes.",
+    "Edit a free receipt template for small business use. Choose a printable layout for retail shops, freelancers, and service businesses, update totals live, and print in minutes.",
 };
 
 export default function Home() {
