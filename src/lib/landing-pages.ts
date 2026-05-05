@@ -10,6 +10,18 @@ export type JumpLink = {
   label: string;
 };
 
+export type LandingPageLink = {
+  href: string;
+  label: string;
+  description?: string;
+};
+
+export type IntentSection = {
+  heading: string;
+  intro: string;
+  points: string[];
+};
+
 export type ReceiptLandingPageKey =
   | "home"
   | "rent-receipt-template"
@@ -69,7 +81,9 @@ export type ReceiptLandingPageConfig = {
   useCases: string[];
   faqs: FaqItem[];
   jumpLinks: JumpLink[];
-  relatedPages: Array<{ href: string; label: string }>;
+  featuredLinks?: LandingPageLink[];
+  intentSection?: IntentSection;
+  relatedPages: LandingPageLink[];
   defaultTemplateId?: "classic" | "service" | "invoice";
   metadata: {
     pathname: string;
@@ -181,15 +195,15 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   home: withSeo({
     key: "home",
     pathname: "/",
-    title: "Receipt Template Generator for Small Business | Free Printable Receipt",
+    title: "Receipt Template Generator for Small Business | Create Receipts Online",
     description:
-      "Create a free small business receipt online. Fill out business details, items, tax, and payment method, preview totals instantly, then print a clean printable receipt in minutes.",
-    heroEyebrow: "Free online receipt generator · Printable layouts · Live totals",
+      "Create a free small business receipt online. Fill out business details, items, tax, and payment method, preview totals instantly, and generate a clean proof-of-payment receipt in minutes.",
+    heroEyebrow: "Free online receipt generator · Small business proof of payment · Live totals",
     h1: "Free Receipt Template Generator for Small Business",
     intro:
-      "Create a polished receipt in minutes. Choose a printable layout, fill in the business and customer details, update line items and tax, and print a clean proof-of-payment receipt without leaving the page.",
+      "Create a polished receipt in minutes. Fill in the business and customer details, update line items and tax, and generate a clear proof-of-payment receipt without leaving the page.",
     supportingCopy:
-      "Built for storefront sales, freelance jobs, and local service businesses that need an editable receipt first and a print-ready version right away.",
+      "Built for storefront sales, freelance jobs, and local service businesses that need a broad receipt generator before narrowing into editable, printable, rent, cash, or service-specific templates.",
     editorIntro:
       "Fill in the fields that matter, adjust your totals, and keep the receipt preview in sync as you type.",
     editorTip:
@@ -200,20 +214,20 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
     fieldsIntro:
       "This receipt template is built around the details most small businesses need for clean records, tax visibility, and customer proof of payment.",
     howItWorksIntro:
-      "A quick path from blank template to a professional printable receipt.",
+      "A quick path from blank receipt fields to a professional proof-of-payment record.",
     useCasesHeading: "Built for everyday small business use",
     useCasesIntro:
       "Whether you run a local shop or a solo service business, a clear receipt helps you look professional and stay organized.",
     faqHeading: "Frequently asked questions",
     faqIntro:
       "Common questions about creating, filling out, and printing a small business receipt template.",
-    ctaHeading: "Create your receipt and print it in minutes",
+    ctaHeading: "Create your receipt online in minutes",
     ctaCopy:
-      "Pick a layout, fill in the details, and use the print-ready version on this page for fast customer handoff or internal records.",
+      "Pick a layout, fill in the details, and use the finished receipt for fast customer handoff, bookkeeping, or internal records.",
     reassurancePoints: [
       "No signup wall or multi-step flow",
       "Live totals stay in sync while you edit",
-      "Print layout stays clean for customer handoff",
+      "Broad fit for small business receipt workflows",
     ],
     fields: [
       "Business name and contact details",
@@ -231,6 +245,7 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
     ],
     faqs: homeFaqs,
     jumpLinks: [
+      { href: "#featured-template-links", label: "Browse by use case" },
       { href: "#editor", label: "Jump to editor" },
       { href: "#templates", label: "Receipt templates" },
       { href: "#receipt-fields", label: "Required receipt fields" },
@@ -238,12 +253,56 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
       { href: "#faq", label: "FAQ" },
     ],
     relatedPages: [
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/editable-receipt-template", label: "Editable receipt template" },
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/sales-receipt-template", label: "Sales receipt template" },
-      { href: "/blank-receipt-template", label: "Blank receipt template" },
-      { href: "/itemized-receipt-template", label: "Itemized receipt template" },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Create general proof-of-payment receipts with payer details, totals, and payment method fields.",
+      },
+      {
+        href: "/editable-receipt-template",
+        label: "Editable receipt template",
+        description: "Fill out receipt fields online when you want an edit-first workflow before printing.",
+      },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Open the paper-ready receipt path when your priority is a clean layout to print immediately.",
+      },
+      {
+        href: "/rent-receipt-template",
+        label: "Rent receipt template",
+        description: "Track tenant, property, and month-covered details for recurring rent payments.",
+      },
+      {
+        href: "/cash-payment-receipt-template",
+        label: "Cash payment receipt template",
+        description: "Show cash received, what it covered, and same-day proof-of-payment details clearly.",
+      },
+      {
+        href: "/service-receipt-template",
+        label: "Service receipt template",
+        description: "List services rendered, labor charges, and provider details for customer handoff.",
+      },
+      {
+        href: "/donation-receipt-template",
+        label: "Donation receipt template",
+        description: "Acknowledge gifts with donor, organization, and contribution notes in a printable format.",
+      },
+      {
+        href: "/sales-receipt-template",
+        label: "Sales receipt template",
+        description: "Use an item-focused receipt page for store sales, product quantities, and checkout totals.",
+      },
+      {
+        href: "/blank-receipt-template",
+        label: "Blank receipt template",
+        description: "Choose a flexible layout when you need a general-purpose receipt form to customize.",
+      },
+      {
+        href: "/itemized-receipt-template",
+        label: "Itemized receipt template",
+        description: "Break down multiple products or services into separate line items and totals.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -319,11 +378,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. Fill in the details in the editor, confirm the preview, and print the final rent receipt immediately.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit rent receipt" },
+      { href: "#receipt-fields", label: "Rent receipt fields" },
+      { href: "#intent-guide", label: "Rent checklist" },
+      { href: "#use-cases", label: "Rent use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Rent receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "Rent receipt checklist for monthly payment records",
+      intro:
+        "This page is tailored for recurring rent receipts where the payment period and property context matter as much as the amount paid.",
+      points: [
+        "Record the month covered so landlord and tenant can match the receipt to the exact rent period.",
+        "Include the property or unit reference when you manage multiple rentals or room leases.",
+        "Add landlord, tenant, and payment-date details to make rent proof easy to verify later.",
+      ],
+    },
     relatedPages: [
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/cash-payment-receipt-template", label: "Cash payment receipt template" },
-      { href: "/service-receipt-template", label: "Service receipt template" },
+      {
+        href: "/cash-payment-receipt-template",
+        label: "Cash payment receipt template",
+        description: "Use this if the rent was paid in cash and you want the payment method highlighted more clearly.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Choose the broader proof-of-payment format for non-rent scenarios or mixed payment records.",
+      },
+      {
+        href: "/service-receipt-template",
+        label: "Service receipt template",
+        description: "Switch to the service receipt page when the payment is for labor or property work instead of rent.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -399,11 +487,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Listing the product or service details is a good idea because it shows exactly what the cash payment was for.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit cash receipt" },
+      { href: "#receipt-fields", label: "Cash receipt fields" },
+      { href: "#intent-guide", label: "Cash receipt guide" },
+      { href: "#use-cases", label: "Cash payment uses" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Cash receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "When to use a cash payment receipt template",
+      intro:
+        "This page is optimized for in-person cash transactions where same-day proof of payment needs to be clear for both the customer and your records.",
+      points: [
+        "Use it for walk-in sales, repair visits, pop-up stalls, and delivery handoffs paid in cash.",
+        "Make the cash payment method obvious so the receipt is easier to reconcile during bookkeeping.",
+        "List what the payment covered to avoid vague cash records later.",
+      ],
+    },
     relatedPages: [
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/service-receipt-template", label: "Service receipt template" },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Open the broader proof-of-payment page when the receipt does not need a cash-specific focus.",
+      },
+      {
+        href: "/service-receipt-template",
+        label: "Service receipt template",
+        description: "Use the service receipt page when the cash payment was for labor, repairs, or completed work.",
+      },
+      {
+        href: "/rent-receipt-template",
+        label: "Rent receipt template",
+        description: "Switch to the rent receipt workflow when the cash payment was for monthly rent or room rental.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -479,11 +596,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. Fill in the details, confirm the preview, and print the donation receipt as soon as it looks right.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit donation receipt" },
+      { href: "#receipt-fields", label: "Donation receipt fields" },
+      { href: "#intent-guide", label: "Donation essentials" },
+      { href: "#use-cases", label: "Donation use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Donation receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "Donation acknowledgement essentials",
+      intro:
+        "This page is for contribution records where donor acknowledgement language and organization details matter more than standard sales wording.",
+      points: [
+        "Include the donor name, organization name, and date so the acknowledgement is easy to keep on file.",
+        "State the donation amount or estimated value plus the purpose or type of contribution when relevant.",
+        "Use the notes area to mention goods or services context without making unsupported compliance claims.",
+      ],
+    },
     relatedPages: [
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/itemized-receipt-template", label: "Itemized receipt template" },
+      {
+        href: "/itemized-receipt-template",
+        label: "Itemized receipt template",
+        description: "Open the itemized page when the contribution record needs a more detailed breakdown of donated items.",
+      },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Choose the print-first format if the donation acknowledgement just needs a simple paper-ready layout.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Use the general payment receipt page for standard paid transactions rather than donations.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -559,11 +705,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. The preview updates live, and you can print the final service receipt as soon as the details are complete.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit service receipt" },
+      { href: "#receipt-fields", label: "Service receipt fields" },
+      { href: "#intent-guide", label: "Service wording guide" },
+      { href: "#use-cases", label: "Service use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Service receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "How to describe services rendered clearly",
+      intro:
+        "This page is designed for labor-based work where customers need to see what was completed, who performed it, and what the charges represent.",
+      points: [
+        "Name the service, task, or job scope instead of using a vague single-line payment note.",
+        "Include provider, technician, or freelancer details when the receipt needs a stronger service reference.",
+        "Use separate service lines for labor, visit fees, or materials when you want a clearer finished-work record.",
+      ],
+    },
     relatedPages: [
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/editable-receipt-template", label: "Editable receipt template" },
-      { href: "/itemized-receipt-template", label: "Itemized receipt template" },
+      {
+        href: "/itemized-receipt-template",
+        label: "Itemized receipt template",
+        description: "Use the itemized page when you need to break service work into multiple tasks or detailed charges.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Switch to the general payment receipt format when the main goal is simple proof of payment.",
+      },
+      {
+        href: "/cash-payment-receipt-template",
+        label: "Cash payment receipt template",
+        description: "Open the cash receipt page when the completed service was paid in cash and you want that context featured.",
+      },
     ],
     defaultTemplateId: "service",
   }),
@@ -639,11 +814,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. The live preview updates as you type, and you can print the payment receipt as soon as the details are ready.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit payment receipt" },
+      { href: "#receipt-fields", label: "Payment receipt fields" },
+      { href: "#intent-guide", label: "Proof of payment guide" },
+      { href: "#use-cases", label: "Payment receipt use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Payment receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "What makes this page a general proof-of-payment template",
+      intro:
+        "Use this receipt page when the transaction does not need rent-, donation-, or service-specific wording and the main goal is to confirm that a payment was received.",
+      points: [
+        "State who paid, who received the payment, and what invoice, order, or balance the payment settled.",
+        "Keep the payment method, amount paid, and date visible so the receipt works as easy proof of payment later.",
+        "Use this page as the broad payment option when you do not need more specialized rent, cash-only, or service wording.",
+      ],
+    },
     relatedPages: [
-      { href: "/cash-payment-receipt-template", label: "Cash payment receipt template" },
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/itemized-receipt-template", label: "Itemized receipt template" },
+      {
+        href: "/cash-payment-receipt-template",
+        label: "Cash payment receipt template",
+        description: "Use the cash payment page when the payment method itself needs to be explicit for in-person cash transactions.",
+      },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Choose the printable page when the search intent is mainly about getting a clean paper-ready receipt fast.",
+      },
+      {
+        href: "/itemized-receipt-template",
+        label: "Itemized receipt template",
+        description: "Switch to the itemized page when the payment receipt needs a clearer line-by-line breakdown of charges.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -719,11 +923,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "For many users, yes. Editing directly online is faster because you can customize the receipt and print it from the same workflow.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit receipt online" },
+      { href: "#receipt-fields", label: "Editable fields" },
+      { href: "#intent-guide", label: "Editable receipt guide" },
+      { href: "#use-cases", label: "Editable receipt use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Editable receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "Why this page fits editable and fillable receipt intent",
+      intro:
+        "This page is aimed at people who want to change receipt details in the browser right away instead of downloading a static template first.",
+      points: [
+        "Highlight the fields that usually need editing, such as customer name, notes, payment method, and custom line items.",
+        "Use this page when flexibility and quick field changes matter more than a generic blank form or a print-first workflow.",
+        "Keep the copy focused on filling, updating, and customizing so Google can distinguish it from printable or blank receipt pages.",
+      ],
+    },
     relatedPages: [
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/blank-receipt-template", label: "Blank receipt template" },
-      { href: "/itemized-receipt-template", label: "Itemized receipt template" },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Move to the printable page when the main goal is a paper-ready receipt layout rather than editability messaging.",
+      },
+      {
+        href: "/blank-receipt-template",
+        label: "Blank receipt template",
+        description: "Use the blank receipt page when the visitor wants a more open-ended form without edit-first positioning.",
+      },
+      {
+        href: "/itemized-receipt-template",
+        label: "Itemized receipt template",
+        description: "Choose the itemized page when the editable receipt also needs a more detailed breakdown of charges or services.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -799,11 +1032,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. It is designed for small business workflows where a clean, fast printable receipt matters.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Print receipt now" },
+      { href: "#receipt-fields", label: "Printable receipt fields" },
+      { href: "#intent-guide", label: "Printable receipt guide" },
+      { href: "#use-cases", label: "Printable receipt use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Printable receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "How this page differs from editable or blank receipt templates",
+      intro:
+        "This page is optimized for people who want a receipt that looks ready to print as soon as the fields are filled in, with less emphasis on file-format language.",
+      points: [
+        "Keep the messaging centered on clean paper output, quick browser printing, and ready-to-hand-over receipts.",
+        "Use this template when print speed matters more than fully open-ended customization or scenario-specific wording.",
+        "If the receipt also needs broader payment wording or editable positioning, route visitors to those more specific pages from here.",
+      ],
+    },
     relatedPages: [
-      { href: "/editable-receipt-template", label: "Editable receipt template" },
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/blank-receipt-template", label: "Blank receipt template" },
+      {
+        href: "/editable-receipt-template",
+        label: "Editable receipt template",
+        description: "Visit the editable page when the user first needs to customize receipt fields extensively before thinking about printing.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Use the payment receipt page for broader proof-of-payment intent that is less tied to print-focused wording.",
+      },
+      {
+        href: "/blank-receipt-template",
+        label: "Blank receipt template",
+        description: "Open the blank receipt page when a flexible general-purpose receipt form is a better fit than a print-first page.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -879,11 +1141,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. Once the product details and totals look right in the preview, you can print the final sales receipt immediately.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Edit sales receipt" },
+      { href: "#receipt-fields", label: "Sales receipt fields" },
+      { href: "#intent-guide", label: "Sales receipt guide" },
+      { href: "#use-cases", label: "Sales receipt use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Sales receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "How this page supports product-sale receipt intent",
+      intro:
+        "Use this page when the receipt needs to show what was sold, how many units were purchased, and the final sale amount in a customer-facing format.",
+      points: [
+        "Keep product names, quantities, and unit prices easy to scan so the receipt clearly reads like a completed sale record.",
+        "Use this page instead of service or rent receipt pages when the transaction is centered on physical goods or item-based checkout.",
+        "Link to the itemized version when the sale needs more detailed line-by-line breakdowns or extra charge transparency.",
+      ],
+    },
     relatedPages: [
-      { href: "/itemized-receipt-template", label: "Itemized receipt template" },
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
+      {
+        href: "/itemized-receipt-template",
+        label: "Itemized receipt template",
+        description: "Switch to the itemized page when the sales receipt needs a more detailed breakdown of products, fees, or add-ons.",
+      },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Use the printable page when the main goal is a paper-ready receipt workflow for quick checkout handoff.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Open the payment receipt page when the intent is broader proof of payment instead of a product-sale-specific receipt.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -959,11 +1250,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. Even on a blank receipt, those details help keep the final record clear and easier to reference later.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Fill blank receipt" },
+      { href: "#receipt-fields", label: "Blank receipt fields" },
+      { href: "#intent-guide", label: "Blank receipt guide" },
+      { href: "#use-cases", label: "Blank receipt use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Blank receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "When a blank receipt template is the better fit",
+      intro:
+        "This page is best when the visitor wants a flexible starting point that can be adapted to different receipt scenarios without strongly pre-labeled wording.",
+      points: [
+        "Use blank receipt messaging for open-ended customization, not for print-first or edit-first positioning alone.",
+        "Keep the guidance broad so the page can support mixed scenarios like general payments, simple sales, or ad hoc paperwork.",
+        "Route users to editable or printable pages when their intent becomes more specific than a flexible blank form.",
+      ],
+    },
     relatedPages: [
-      { href: "/editable-receipt-template", label: "Editable receipt template" },
-      { href: "/printable-receipt-template", label: "Printable receipt template" },
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
+      {
+        href: "/editable-receipt-template",
+        label: "Editable receipt template",
+        description: "Choose the editable page when the visitor explicitly wants to customize receipt fields online with stronger edit-first language.",
+      },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Move to the printable page when the next step is mainly producing a paper-ready receipt rather than keeping the form general.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Use the payment receipt page when the receipt should read as explicit proof that a payment was received.",
+      },
     ],
     defaultTemplateId: "classic",
   }),
@@ -1039,11 +1359,40 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
           "Yes. Once the line items and totals are complete, you can print the final itemized receipt directly from the page.",
       },
     ],
-    jumpLinks: [],
+    jumpLinks: [
+      { href: "#editor", label: "Add line items" },
+      { href: "#receipt-fields", label: "Itemized receipt fields" },
+      { href: "#intent-guide", label: "Itemized receipt guide" },
+      { href: "#use-cases", label: "Itemized receipt use cases" },
+      { href: "#related-templates", label: "Related templates" },
+      { href: "#faq", label: "Itemized receipt FAQ" },
+    ],
+    intentSection: {
+      heading: "Why this page is different from general payment or sales receipts",
+      intro:
+        "Use this page when the searcher needs a more detailed breakdown of charges, quantities, or service lines than a basic payment receipt would normally show.",
+      points: [
+        "Separate products or services into individual lines so the receipt clearly explains where the total came from.",
+        "Use this page when transparency and charge detail matter more than a short proof-of-payment format.",
+        "Link to sales or editable pages when the visitor needs either item-sale framing or broader field customization instead of detail-heavy breakdowns.",
+      ],
+    },
     relatedPages: [
-      { href: "/sales-receipt-template", label: "Sales receipt template" },
-      { href: "/payment-receipt-template", label: "Payment receipt template" },
-      { href: "/editable-receipt-template", label: "Editable receipt template" },
+      {
+        href: "/sales-receipt-template",
+        label: "Sales receipt template",
+        description: "Use the sales receipt page when the receipt should emphasize product checkout rather than a detailed multi-line breakdown.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Choose the payment receipt page for simpler proof-of-payment intent when a detailed item list is not necessary.",
+      },
+      {
+        href: "/editable-receipt-template",
+        label: "Editable receipt template",
+        description: "Open the editable page when the main need is flexible browser editing, with itemization as a secondary concern.",
+      },
     ],
     defaultTemplateId: "classic",
   }),

@@ -19,18 +19,27 @@ describe("Home page receipt workflow", () => {
     expect(screen.getByRole("radio", { name: /classic receipt/i })).toBeDefined();
   });
 
-  test("renders homepage jump links, faq section, related templates, and a single how-it-works section", () => {
+  test("renders homepage jump links, indexing-focused template clusters, faq section, related templates, and a single how-it-works section", () => {
     const { container } = render(<Home />);
 
     expect(screen.getByRole("link", { name: /jump to editor/i }).getAttribute("href")).toBe("#editor");
     expect(screen.getByRole("link", { name: /required receipt fields/i }).getAttribute("href")).toBe(
       "#receipt-fields",
     );
+    expect(
+      screen.getByRole("heading", { level: 2, name: /start with the strongest receipt template intents/i }),
+    ).toBeDefined();
+    expect(
+      screen.getByRole("heading", { level: 2, name: /browse receipt templates by business scenario/i }),
+    ).toBeDefined();
     expect(screen.getByRole("heading", { level: 2, name: /frequently asked questions/i })).toBeDefined();
     expect(screen.getByRole("heading", { level: 2, name: /related receipt templates/i })).toBeDefined();
-    expect(screen.getByRole("link", { name: /payment receipt template/i })).toBeDefined();
-    expect(screen.getByRole("link", { name: /editable receipt template/i })).toBeDefined();
-    expect(screen.getByRole("link", { name: /itemized receipt template/i })).toBeDefined();
+    expect(screen.getAllByRole("link", { name: /payment receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /editable receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /printable receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /rent receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /cash payment receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /service receipt template/i }).length).toBeGreaterThan(0);
     expect(container.querySelectorAll("#how-it-works")).toHaveLength(1);
     expect(container.querySelectorAll("#faq")).toHaveLength(1);
   });

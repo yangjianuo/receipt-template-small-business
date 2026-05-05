@@ -146,6 +146,7 @@ describe("site URL SEO helpers", () => {
     ]);
 
     expect(landingPages.home.jumpLinks.map((item) => item.href)).toEqual([
+      "#featured-template-links",
       "#editor",
       "#templates",
       "#receipt-fields",
@@ -164,6 +165,17 @@ describe("site URL SEO helpers", () => {
     expect(landingPages["sales-receipt-template"].fieldsHeading).toMatch(/sales receipt/i);
     expect(landingPages["blank-receipt-template"].useCasesHeading).toMatch(/blank receipt/i);
     expect(landingPages["itemized-receipt-template"].faqHeading).toMatch(/itemized receipt/i);
-    expect(landingPages.home.relatedPages).toHaveLength(6);
+    expect(landingPages.home.relatedPages).toHaveLength(10);
+    expect(landingPages.home.relatedPages.map((item) => item.href)).toEqual(
+      expect.arrayContaining([
+        "/payment-receipt-template",
+        "/editable-receipt-template",
+        "/printable-receipt-template",
+        "/rent-receipt-template",
+        "/cash-payment-receipt-template",
+        "/service-receipt-template",
+        "/donation-receipt-template",
+      ]),
+    );
   });
 });

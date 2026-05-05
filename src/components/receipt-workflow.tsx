@@ -13,6 +13,7 @@ import {
 } from "@/lib/receipt";
 import {
   getLandingPageStructuredData,
+  landingPages,
   type ReceiptLandingPageConfig,
 } from "@/lib/landing-pages";
 
@@ -35,6 +36,47 @@ const steps = [
   },
 ];
 
+const homepagePriorityLinks = [
+  {
+    href: "/payment-receipt-template",
+    title: "Payment receipt template",
+    description: "Best for proof-of-payment intent when someone needs a general payment confirmation receipt.",
+  },
+  {
+    href: "/editable-receipt-template",
+    title: "Editable receipt template",
+    description: "Best for fillable receipt searches where the user wants to customize fields online before printing.",
+  },
+  {
+    href: "/printable-receipt-template",
+    title: "Printable receipt template",
+    description: "Best for paper-ready receipt intent when the user wants a clean layout to print immediately.",
+  },
+];
+
+const homepageSupportLinks = [
+  {
+    href: "/rent-receipt-template",
+    title: "Rent receipt template",
+    description: "For landlords and property managers who need proof of rent paid.",
+  },
+  {
+    href: "/cash-payment-receipt-template",
+    title: "Cash payment receipt template",
+    description: "For cash transactions where payment method clarity matters.",
+  },
+  {
+    href: "/service-receipt-template",
+    title: "Service receipt template",
+    description: "For freelancers and service businesses documenting completed work and payment.",
+  },
+  {
+    href: "/donation-receipt-template",
+    title: "Donation receipt template",
+    description: "For charities and fundraisers issuing donation acknowledgements.",
+  },
+];
+
 export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
   const [formData, setFormData] = useState<ReceiptFormData>({
     ...defaultReceiptData,
@@ -50,6 +92,14 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
   );
 
   const structuredData = getLandingPageStructuredData(page);
+  const priorityLinks = homepagePriorityLinks.map((item) => ({
+    ...item,
+    page: landingPages[item.href.slice(1) as keyof typeof landingPages],
+  }));
+  const supportLinks = homepageSupportLinks.map((item) => ({
+    ...item,
+    page: landingPages[item.href.slice(1) as keyof typeof landingPages],
+  }));
 
   function updateField<Key extends keyof ReceiptFormData>(key: Key, value: ReceiptFormData[Key]) {
     setFormData((current) => ({ ...current, [key]: value }));
@@ -256,10 +306,93 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           </nav>
         ) : null}
 
+        {page.key === "home" ? (
+          <>
+            <section id="featured-template-links" className="space-y-5 print:hidden">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold sm:text-3xl">Start with the strongest receipt template intents</h2>
+                <p className="max-w-3xl text-stone-600">
+                  If you already know the kind of receipt you need, open the most relevant landing page first. These
+                  are the clearest paths for proof-of-payment, editable, and printable receipt searches.
+                </p>
+              </div>
+              <div className="grid gap-4 lg:grid-cols-3">
+                {priorityLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
+                  >
+                    <p className="text-xs font-medium uppercase tracking-[0.22em] text-stone-500">Priority template</p>
+                    <h3 className="mt-3 text-xl font-semibold text-stone-900">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-stone-600">{item.description}</p>
+                    <p className="mt-4 text-sm font-medium text-stone-900">{item.page.h1} →</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            <section id="business-scenario-links" className="grid gap-6 rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm lg:grid-cols-[0.9fr_1.1fr] print:hidden">
+              <div className="space-y-3">
+                <h2 className="text-2xl font-semibold sm:text-3xl">Browse receipt templates by business scenario</h2>
+                <p className="text-stone-600">
+                  Use these supporting template paths when the receipt needs to match a clearer use case such as rent,
+                  cash payment, services, or donation records.
+                </p>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {supportLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-3xl border border-stone-200 bg-stone-50 p-5 transition hover:border-stone-300 hover:bg-white"
+                  >
+                    <h3 className="text-lg font-semibold text-stone-900">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-stone-600">{item.description}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          </>
+        ) : null}
+
         <section id="templates" className="space-y-5 print:hidden">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold sm:text-3xl">Choose a receipt template</h2>
             <p className="max-w-3xl text-stone-600">{page.templateIntro}</p>
+            {page.key === "home" ? (
+              <p className="max-w-4xl text-sm leading-7 text-stone-600">
+                Looking for a specific format? Try our{" "}
+                <Link
+                  href="/rent-receipt-template"
+                  className="font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition hover:decoration-stone-900"
+                >
+                  rent receipt template
+                </Link>
+                {", "}
+                <Link
+                  href="/cash-payment-receipt-template"
+                  className="font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition hover:decoration-stone-900"
+                >
+                  cash payment receipt template
+                </Link>
+                {", "}
+                <Link
+                  href="/service-receipt-template"
+                  className="font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition hover:decoration-stone-900"
+                >
+                  service receipt template
+                </Link>
+                {", "}or{" "}
+                <Link
+                  href="/donation-receipt-template"
+                  className="font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition hover:decoration-stone-900"
+                >
+                  donation receipt template
+                </Link>
+                .
+              </p>
+            ) : null}
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {receiptTemplates.map((template) => {
@@ -502,6 +635,26 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           </div>
         </section>
 
+        {page.intentSection ? (
+          <section
+            id="intent-guide"
+            className="grid gap-6 rounded-[28px] border border-emerald-200 bg-emerald-50/70 p-6 shadow-sm lg:grid-cols-[0.9fr_1.1fr] print:hidden"
+          >
+            <div className="space-y-3">
+              <p className="text-sm font-medium uppercase tracking-[0.22em] text-emerald-900">Page-specific guidance</p>
+              <h2 className="text-2xl font-semibold text-stone-900 sm:text-3xl">{page.intentSection.heading}</h2>
+              <p className="text-stone-700">{page.intentSection.intro}</p>
+            </div>
+            <ul className="grid gap-3 text-sm text-stone-700">
+              {page.intentSection.points.map((point) => (
+                <li key={point} className="rounded-2xl border border-emerald-100 bg-white/90 px-4 py-3 shadow-sm">
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
         <section id="use-cases" className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start print:hidden">
           <div className="space-y-3">
             <h2 className="text-2xl font-semibold sm:text-3xl">{page.useCasesHeading}</h2>
@@ -516,7 +669,7 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           </ul>
         </section>
 
-        <section className="space-y-5 print:hidden">
+        <section id="related-templates" className="space-y-5 print:hidden">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold sm:text-3xl">Related receipt templates</h2>
             <p className="max-w-3xl text-stone-600">
@@ -524,18 +677,23 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {page.relatedPages.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
-              >
-                <h3 className="text-lg font-semibold text-stone-900">{item.label}</h3>
-                <p className="mt-2 text-sm leading-7 text-stone-600">
-                  Open this landing page for a more specific receipt workflow and printable setup.
-                </p>
-              </Link>
-            ))}
+            {page.relatedPages.map((item) => {
+              const relatedPage = landingPages[item.href.slice(1) as keyof typeof landingPages];
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
+                >
+                  <h3 className="text-lg font-semibold text-stone-900">{item.label}</h3>
+                  <p className="mt-2 text-sm leading-7 text-stone-600">
+                    {item.description ??
+                      relatedPage?.supportingCopy ??
+                      "Open this landing page for a more specific receipt workflow and printable setup."}
+                  </p>
+                </Link>
+              );
+            })}
           </div>
         </section>
 
