@@ -668,7 +668,7 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {steps.map((step, index) => (
-              <article key={step.title} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
+              <article key={step.title} className="rounded-[26px] border border-[#E4D6C0] bg-[#FFF9EE] p-5 shadow-[0_12px_30px_-28px_rgba(43,33,24,0.35)]">
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-stone-900 text-sm font-semibold text-white">
                   0{index + 1}
                 </span>
@@ -682,16 +682,17 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
         {page.intentSection ? (
           <section
             id="intent-guide"
-            className="grid gap-6 rounded-[28px] border border-emerald-200 bg-emerald-50/70 p-6 shadow-sm lg:grid-cols-[0.9fr_1.1fr] print:hidden"
+            className="relative overflow-hidden rounded-[32px] border border-[#BFA98E] bg-[#FFFDF8] p-6 shadow-[0_20px_58px_-44px_rgba(43,33,24,0.45)] lg:grid lg:grid-cols-[0.86fr_1.14fr] lg:gap-6 print:hidden"
           >
-            <div className="space-y-3">
-              <p className="text-sm font-medium uppercase tracking-[0.22em] text-emerald-900">Page-specific guidance</p>
-              <h2 className="text-2xl font-semibold text-stone-900 sm:text-3xl">{page.intentSection.heading}</h2>
-              <p className="text-stone-700">{page.intentSection.intro}</p>
+            <div className="absolute right-6 top-6 rotate-[-10deg] rounded-md border-2 border-[#9E3D2F]/25 px-4 py-1 font-mono text-sm font-black uppercase tracking-[0.18em] text-[#9E3D2F]/30">verified</div>
+            <div className="space-y-3 pr-20">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#7A4E2D]">Intent ledger</p>
+              <h2 className="font-serif text-3xl font-semibold tracking-[-0.03em] text-stone-900 sm:text-4xl">{page.intentSection.heading}</h2>
+              <p className="leading-7 text-stone-600">{page.intentSection.intro}</p>
             </div>
             <ul className="grid gap-3 text-sm text-stone-700">
               {page.intentSection.points.map((point) => (
-                <li key={point} className="rounded-2xl border border-emerald-100 bg-white/90 px-4 py-3 shadow-sm">
+                <li key={point} className="grid grid-cols-[auto_1fr] items-start gap-3 rounded-2xl border border-[#E4D6C0] bg-[#FFF9EE] px-4 py-3 shadow-[0_10px_24px_-20px_rgba(43,33,24,0.3)] before:mt-2 before:h-1.5 before:w-8 before:rounded-full before:bg-[#7A4E2D]/35">
                   {point}
                 </li>
               ))}
@@ -713,12 +714,16 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           </ul>
         </section>
 
-        <section id="related-templates" className="space-y-5 print:hidden">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-semibold sm:text-3xl">Related receipt templates</h2>
+        <section id="related-templates" className="space-y-5 rounded-[32px] border border-[#BFA98E] bg-[#EFE2CE] p-6 shadow-[0_20px_58px_-44px_rgba(43,33,24,0.45)] print:hidden">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div className="space-y-2">
+              <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#7A4E2D]">Related drawer</p>
+              <h2 className="font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">Related receipt templates</h2>
             <p className="max-w-3xl text-stone-600">
-              Explore adjacent receipt layouts to match different payment workflows and search intents.
-            </p>
+                Explore adjacent receipt layouts to match different payment workflows and search intents.
+              </p>
+            </div>
+            <span className="rounded-full border border-[#BFA98E] bg-[#FFFDF8] px-4 py-2 font-mono text-xs uppercase tracking-[0.16em] text-[#7A4E2D]">file tabs</span>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {page.relatedPages.map((item) => {
@@ -727,8 +732,9 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
+                  className="group rounded-[26px] border border-[#D7C7AE] bg-[#FFFDF8] p-5 shadow-[0_14px_38px_-32px_rgba(43,33,24,0.4)] transition hover:-translate-y-0.5 hover:border-[#7A4E2D]/45"
                 >
+                  <div className="mb-4 flex h-16 flex-col justify-between rounded-sm border border-[#D7C7AE] bg-[#FFF9EE] p-3 group-hover:bg-white"><span className="h-px bg-[#D7C7AE]" /><span className="h-px bg-[#D7C7AE]" /><span className="h-px bg-[#D7C7AE]" /></div>
                   <h3 className="text-lg font-semibold text-stone-900">{item.label}</h3>
                   <p className="mt-2 text-sm leading-7 text-stone-600">
                     {item.description ??
@@ -741,14 +747,15 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           </div>
         </section>
 
-        <section id="faq" className="space-y-5 print:hidden">
+        <section id="faq" className="space-y-5 rounded-[32px] border border-[#D7C7AE] bg-[#FFFDF8] p-6 shadow-[0_18px_48px_-40px_rgba(43,33,24,0.35)] print:hidden">
           <div className="space-y-2">
-            <h2 className="text-2xl font-semibold sm:text-3xl">{page.faqHeading}</h2>
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#7A4E2D]">Receipt notes</p>
+            <h2 className="font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{page.faqHeading}</h2>
             <p className="max-w-3xl text-stone-600">{page.faqIntro}</p>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {page.faqs.map((faq) => (
-              <article key={faq.question} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
+              <article key={faq.question} className="rounded-[26px] border border-[#E4D6C0] bg-[#FFF9EE] p-5 shadow-[0_12px_30px_-28px_rgba(43,33,24,0.35)]">
                 <h3 className="text-lg font-semibold">{faq.question}</h3>
                 <p className="mt-3 text-sm leading-7 text-stone-600">{faq.answer}</p>
               </article>
@@ -757,26 +764,27 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
         </section>
 
         <section className="print:hidden">
-          <div className="rounded-[32px] border border-stone-200 bg-white px-6 py-10 text-center shadow-sm sm:px-8">
-            <p className="text-sm font-medium uppercase tracking-[0.22em] text-stone-500">
+          <div className="relative overflow-hidden rounded-[34px] border border-[#4A2F1E] bg-[#4A2F1E] px-6 py-10 text-center text-white shadow-[0_24px_70px_-42px_rgba(43,33,24,0.55)] sm:px-8">
+            <div className="pointer-events-none absolute left-6 top-6 rounded-md border-2 border-white/20 px-4 py-1 font-mono text-xs font-black uppercase tracking-[0.18em] text-white/25">print ready</div>
+            <p className="text-sm font-medium uppercase tracking-[0.22em] text-stone-300">
               Ready to finish your receipt?
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+            <h2 className="mt-3 font-serif text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
               {page.ctaHeading}
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-stone-600 sm:text-base">
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-stone-200 sm:text-base">
               {page.ctaCopy}
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
                 href="#editor"
-                className="inline-flex items-center justify-center rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-stone-700"
+                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#2B2118] transition hover:bg-[#FFFDF8]"
               >
                 Start Editing
               </a>
               <a
                 href="#preview"
-                className="inline-flex items-center justify-center rounded-full border border-stone-300 bg-white px-6 py-3 text-sm font-medium text-stone-900 transition hover:border-stone-400 hover:bg-stone-100"
+                className="inline-flex items-center justify-center rounded-full border border-white/25 bg-transparent px-6 py-3 text-sm font-medium text-white transition hover:bg-white/10"
               >
                 Back to Preview
               </a>
