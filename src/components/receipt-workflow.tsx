@@ -52,6 +52,21 @@ const homepagePriorityLinks = [
     title: "Printable receipt template",
     description: "Best for paper-ready receipt intent when the user wants a clean layout to print immediately.",
   },
+  {
+    href: "/sales-receipt-template",
+    title: "Sales receipt template",
+    description: "Best for item-based sales where the receipt should show products, quantities, and checkout totals.",
+  },
+  {
+    href: "/blank-receipt-template",
+    title: "Blank receipt template",
+    description: "Best for flexible receipt-form intent when the user wants a clean starting point to customize.",
+  },
+  {
+    href: "/itemized-receipt-template",
+    title: "Itemized receipt template",
+    description: "Best for detailed receipt intent when each charge needs a clear line-by-line breakdown.",
+  },
 ];
 
 const homepageSupportLinks = [
@@ -156,7 +171,7 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.12),_transparent_30%),linear-gradient(180deg,#f8f7f4_0%,#f1eee7_100%)] text-stone-900 print:bg-white">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#FBF8F1_0%,#F3EBDD_100%)] text-[#2B2118] print:bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.faq) }}
@@ -169,7 +184,7 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
       <section className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-16 lg:px-10 lg:py-20 print:max-w-none print:px-0 print:py-0">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start print:block">
           <div className="space-y-6 print:hidden">
-            <span className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-sm font-medium text-emerald-900">
+            <span className="inline-flex rounded-full border border-[#DED4C6] bg-white px-4 py-1.5 text-sm font-medium text-[#7A4E2D]">
               {page.heroEyebrow}
             </span>
             <div className="space-y-4">
@@ -184,28 +199,28 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#editor"
-                className="inline-flex items-center justify-center rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-stone-700"
+                className="inline-flex items-center justify-center rounded-xl bg-[#2B2118] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_34px_-24px_rgba(43,33,24,0.55)] transition hover:-translate-y-0.5 hover:bg-[#433326]"
               >
                 Open Receipt Editor
               </a>
               <button
                 type="button"
                 onClick={handlePrint}
-                className="inline-flex items-center justify-center rounded-full border border-stone-300 bg-white px-6 py-3 text-sm font-medium text-stone-900 transition hover:border-stone-400 hover:bg-stone-100"
+                className="inline-flex items-center justify-center rounded-xl border border-[#DED4C6] bg-white px-6 py-3 text-sm font-medium text-[#2B2118] transition hover:-translate-y-0.5 hover:border-[#7A4E2D]/45 hover:bg-[#FBF8F1]"
               >
                 Print Sample Receipt
               </button>
             </div>
             <ul className="grid gap-3 pt-2 text-sm text-stone-600 sm:grid-cols-3">
               {page.reassurancePoints.map((item) => (
-                <li key={item} className="rounded-2xl border border-stone-200 bg-white px-4 py-3 shadow-sm">
+                <li key={item} className="rounded-xl border border-[#DED4C6] bg-white px-4 py-3 shadow-[0_10px_28px_-22px_rgba(43,33,24,0.25)]">
                   {item}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="rounded-[32px] border border-stone-200 bg-white/90 p-5 shadow-[0_24px_80px_-40px_rgba(28,25,23,0.45)] backdrop-blur print:rounded-none print:border-0 print:bg-white print:p-0 print:shadow-none">
+          <div className="rounded-2xl border border-[#DED4C6] bg-white p-5 shadow-[0_18px_50px_-36px_rgba(43,33,24,0.35)] print:rounded-none print:border-0 print:bg-white print:p-0 print:shadow-none">
             <div className="mb-5 flex items-center justify-between gap-4 print:hidden">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.24em] text-stone-500">
@@ -310,13 +325,14 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           <>
             <section id="featured-template-links" className="space-y-5 print:hidden">
               <div className="space-y-2">
-                <h2 className="text-2xl font-semibold sm:text-3xl">Start with the strongest receipt template intents</h2>
+                <h2 className="text-2xl font-semibold sm:text-3xl">Start with the priority receipt template pages</h2>
                 <p className="max-w-3xl text-stone-600">
                   If you already know the kind of receipt you need, open the most relevant landing page first. These
-                  are the clearest paths for proof-of-payment, editable, and printable receipt searches.
+                  are the clearest paths for proof-of-payment, editable, printable, sales, blank, and itemized receipt
+                  searches.
                 </p>
               </div>
-              <div className="grid gap-4 lg:grid-cols-3">
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {priorityLinks.map((item) => (
                   <Link
                     key={item.href}

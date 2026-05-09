@@ -27,7 +27,7 @@ describe("Home page receipt workflow", () => {
       "#receipt-fields",
     );
     expect(
-      screen.getByRole("heading", { level: 2, name: /start with the strongest receipt template intents/i }),
+      screen.getByRole("heading", { level: 2, name: /start with the priority receipt template pages/i }),
     ).toBeDefined();
     expect(
       screen.getByRole("heading", { level: 2, name: /browse receipt templates by business scenario/i }),
@@ -37,6 +37,9 @@ describe("Home page receipt workflow", () => {
     expect(screen.getAllByRole("link", { name: /payment receipt template/i }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /editable receipt template/i }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /printable receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /sales receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /blank receipt template/i }).length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("link", { name: /itemized receipt template/i }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /rent receipt template/i }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /cash payment receipt template/i }).length).toBeGreaterThan(0);
     expect(screen.getAllByRole("link", { name: /service receipt template/i }).length).toBeGreaterThan(0);
