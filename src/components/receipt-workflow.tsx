@@ -92,6 +92,17 @@ const homepageSupportLinks = [
   },
 ];
 
+const trustStrip = ["No signup", "Live totals", "Print-ready layout"] as const;
+
+const ledgerRows = [
+  ["Payment", "proof of payment", "$148.90"],
+  ["Editable", "fillable fields", "$82.40"],
+  ["Printable", "paper-ready layout", "$214.15"],
+  ["Sales", "itemized checkout", "$56.00"],
+  ["Blank", "clean starter", "$0.00"],
+  ["Itemized", "line-by-line", "$319.75"],
+] as const;
+
 export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
   const [formData, setFormData] = useState<ReceiptFormData>({
     ...defaultReceiptData,
@@ -171,7 +182,7 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
   }
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#FBF8F1_0%,#F3EBDD_100%)] text-[#2B2118] print:bg-white">
+    <main className="min-h-screen bg-[#F4EBDD] text-[#2B2118] [background-image:linear-gradient(rgba(122,78,45,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(122,78,45,0.035)_1px,transparent_1px)] [background-size:100%_32px,32px_32px] print:bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData.faq) }}
@@ -184,11 +195,11 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
       <section className="mx-auto flex max-w-7xl flex-col gap-14 px-6 py-16 lg:px-10 lg:py-20 print:max-w-none print:px-0 print:py-0">
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start print:block">
           <div className="space-y-6 print:hidden">
-            <span className="inline-flex rounded-full border border-[#DED4C6] bg-white px-4 py-1.5 text-sm font-medium text-[#7A4E2D]">
+            <span className="inline-flex rounded-full border border-[#BFA98E] bg-[#FFFDF8]/85 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-[#7A4E2D]">
               {page.heroEyebrow}
             </span>
             <div className="space-y-4">
-              <h1 className="max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="max-w-3xl font-serif text-5xl font-semibold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
                 {page.h1}
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-stone-600">{page.intro}</p>
@@ -199,28 +210,28 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
                 href="#editor"
-                className="inline-flex items-center justify-center rounded-xl bg-[#2B2118] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_34px_-24px_rgba(43,33,24,0.55)] transition hover:-translate-y-0.5 hover:bg-[#433326]"
+                className="inline-flex items-center justify-center rounded-xl bg-[#4A2F1E] px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_34px_-24px_rgba(43,33,24,0.55)] transition hover:-translate-y-0.5 hover:bg-[#2B2118]"
               >
                 Open Receipt Editor
               </a>
               <button
                 type="button"
                 onClick={handlePrint}
-                className="inline-flex items-center justify-center rounded-xl border border-[#DED4C6] bg-white px-6 py-3 text-sm font-medium text-[#2B2118] transition hover:-translate-y-0.5 hover:border-[#7A4E2D]/45 hover:bg-[#FBF8F1]"
+                className="inline-flex items-center justify-center rounded-xl border border-[#BFA98E] bg-white px-6 py-3 text-sm font-medium text-[#2B2118] transition hover:-translate-y-0.5 hover:border-[#7A4E2D]/55 hover:bg-[#FFFDF8]"
               >
                 Print Sample Receipt
               </button>
             </div>
-            <ul className="grid gap-3 pt-2 text-sm text-stone-600 sm:grid-cols-3">
-              {page.reassurancePoints.map((item) => (
-                <li key={item} className="rounded-xl border border-[#DED4C6] bg-white px-4 py-3 shadow-[0_10px_28px_-22px_rgba(43,33,24,0.25)]">
+            <ul className="grid gap-3 pt-2 text-sm text-stone-700 sm:grid-cols-3">
+              {trustStrip.map((item) => (
+                <li key={item} className="rounded-xl border border-[#BFA98E] bg-[#FFFDF8]/90 px-4 py-3 font-semibold shadow-[0_10px_28px_-22px_rgba(43,33,24,0.25)]">
                   {item}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="rounded-2xl border border-[#DED4C6] bg-white p-5 shadow-[0_18px_50px_-36px_rgba(43,33,24,0.35)] print:rounded-none print:border-0 print:bg-white print:p-0 print:shadow-none">
+          <div className="rounded-[30px] border border-[#BFA98E] bg-[#EFE2CE] p-5 shadow-[0_24px_70px_-44px_rgba(43,33,24,0.45)] print:rounded-none print:border-0 print:bg-white print:p-0 print:shadow-none">
             <div className="mb-5 flex items-center justify-between gap-4 print:hidden">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.24em] text-stone-500">
@@ -233,23 +244,24 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
               </span>
             </div>
 
-            <div className="overflow-hidden rounded-[26px] border border-stone-200 bg-white print:rounded-none print:border-0">
-              <div className={`bg-gradient-to-r ${activeTemplate.accent} px-6 py-5 text-white`}>
+            <div className="relative overflow-hidden rounded-[18px] border border-[#D7C7AE] bg-[#FFFDF8] shadow-[0_18px_55px_-40px_rgba(43,33,24,0.55)] [background-image:linear-gradient(rgba(122,78,45,0.08)_1px,transparent_1px)] [background-size:100%_28px] print:rounded-none print:border-0">
+              <div className="pointer-events-none absolute right-8 top-36 z-10 rotate-[-13deg] rounded-md border-4 border-[#9E3D2F]/35 px-5 py-2 font-mono text-2xl font-black uppercase tracking-[0.18em] text-[#9E3D2F]/35">PAID</div>
+              <div className="border-b border-[#D7C7AE] bg-[#F6EBD8] px-6 py-5 text-[#2B2118]">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-white/70">{formData.businessName}</p>
-                    <p className="mt-2 text-3xl font-semibold">{activeTemplate.previewLabel}</p>
-                    <p className="mt-1 text-sm text-white/75">{formData.businessContact}</p>
+                    <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#7A4E2D]">{formData.businessName}</p>
+                    <p className="mt-2 font-serif text-3xl font-semibold">{activeTemplate.previewLabel}</p>
+                    <p className="mt-1 text-sm text-stone-600">{formData.businessContact}</p>
                   </div>
-                  <div className="text-right text-sm text-white/80">
+                  <div className="text-right font-mono text-sm text-stone-600 [font-variant-numeric:tabular-nums]">
                     <p>#{formData.receiptNumber || "—"}</p>
                     <p>{formData.issueDate || "—"}</p>
                   </div>
                 </div>
               </div>
 
-              <div id="preview" className="space-y-5 px-6 py-6 text-sm text-stone-700 print:px-8 print:py-8">
-                <div className="grid gap-3 rounded-3xl bg-stone-50 p-4 sm:grid-cols-3">
+              <div id="preview" className="space-y-5 px-6 py-6 text-sm text-stone-700 [font-variant-numeric:tabular-nums] print:px-8 print:py-8">
+                <div className="grid gap-3 rounded-2xl border border-[#E4D6C0] bg-[#FFF9EE]/80 p-4 sm:grid-cols-3">
                   <div>
                     <p className="text-xs uppercase tracking-[0.2em] text-stone-500">Customer</p>
                     <p className="mt-2 font-medium text-stone-900">{formData.customerName || "Walk-in client"}</p>
@@ -264,14 +276,14 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
                   </div>
                 </div>
 
-                <div className="overflow-hidden rounded-3xl border border-stone-200">
-                  <div className="grid grid-cols-[1.5fr_0.5fr_0.7fr_0.8fr] gap-3 bg-stone-100 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                <div className="overflow-hidden rounded-2xl border border-[#D7C7AE] bg-[#FFFDF8]">
+                  <div className="grid grid-cols-[1.5fr_0.5fr_0.7fr_0.8fr] gap-3 border-b border-[#D7C7AE] bg-[#F6EBD8] px-4 py-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-[#7A4E2D]">
                     <span>Item</span>
                     <span>Qty</span>
                     <span>Unit</span>
                     <span className="text-right">Amount</span>
                   </div>
-                  <div className="divide-y divide-stone-200">
+                  <div className="divide-y divide-[#E4D6C0]">
                     {formData.items.map((item) => {
                       const amount = item.quantity * item.unitPrice;
                       return (
@@ -286,7 +298,7 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
                   </div>
                 </div>
 
-                <div className="ml-auto max-w-sm space-y-2 rounded-3xl bg-stone-50 p-4">
+                <div className="ml-auto max-w-sm space-y-2 rounded-2xl border border-[#E4D6C0] bg-[#FFF9EE]/80 p-4">
                   <div className="flex items-center justify-between">
                     <span>Subtotal</span>
                     <span>{formatMoney(totals.subtotal)}</span>
@@ -325,26 +337,36 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
           <>
             <section id="featured-template-links" className="space-y-5 print:hidden">
               <div className="space-y-2">
-                <h2 className="text-2xl font-semibold sm:text-3xl">Start with the priority receipt template pages</h2>
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-[#7A4E2D]">Ledger row templates</p>
+                <h2 className="font-serif text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">Start with the priority receipt template pages</h2>
                 <p className="max-w-3xl text-stone-600">
-                  If you already know the kind of receipt you need, open the most relevant landing page first. These
-                  are the clearest paths for proof-of-payment, editable, printable, sales, blank, and itemized receipt
-                  searches.
+                  Template entry points now look like receipt paper thumbnails and ledger rows instead of generic cards.
                 </p>
               </div>
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {priorityLinks.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
-                  >
-                    <p className="text-xs font-medium uppercase tracking-[0.22em] text-stone-500">Priority template</p>
-                    <h3 className="mt-3 text-xl font-semibold text-stone-900">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-stone-600">{item.description}</p>
-                    <p className="mt-4 text-sm font-medium text-stone-900">{item.page.h1} →</p>
-                  </Link>
-                ))}
+              <div className="overflow-hidden rounded-[30px] border border-[#BFA98E] bg-[#FFFDF8] shadow-[0_18px_55px_-42px_rgba(43,33,24,0.35)]">
+                {priorityLinks.map((item, index) => {
+                  const row = ledgerRows[index] ?? ledgerRows[0];
+                  return (
+                    <Link key={item.href} href={item.href} className="grid gap-4 border-b border-[#E4D6C0] px-5 py-4 transition last:border-b-0 hover:bg-[#F6EBD8] md:grid-cols-[0.85fr_1.25fr_0.7fr] md:items-center">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-16 w-12 shrink-0 flex-col justify-between rounded-sm border border-[#D7C7AE] bg-[#FFF9EE] p-2 shadow-[0_8px_18px_-14px_rgba(43,33,24,0.5)]">
+                          <span className="h-px bg-[#D7C7AE]" />
+                          <span className="h-px bg-[#D7C7AE]" />
+                          <span className="h-px bg-[#D7C7AE]" />
+                        </div>
+                        <div>
+                          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#7A4E2D]">{row[0]}</p>
+                          <h3 className="mt-1 text-lg font-semibold text-stone-900">{item.title}</h3>
+                        </div>
+                      </div>
+                      <p className="text-sm leading-7 text-stone-600">{item.description}</p>
+                      <div className="font-mono text-sm text-stone-700 md:text-right">
+                        <p>{row[1]}</p>
+                        <p className="mt-1 font-semibold text-stone-950">{row[2]}</p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </section>
 
@@ -416,8 +438,8 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
               return (
                 <label
                   key={template.id}
-                  className={`block cursor-pointer rounded-3xl border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                    active ? "border-stone-900 bg-stone-900 text-white" : "border-stone-200 bg-white text-stone-900"
+                  className={`block cursor-pointer rounded-[28px] border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                    active ? "border-[#4A2F1E] bg-[#4A2F1E] text-white" : "border-[#D7C7AE] bg-[#FFFDF8] text-stone-900"
                   }`}
                 >
                   <input
@@ -429,6 +451,12 @@ export function ReceiptWorkflow({ page }: ReceiptWorkflowProps) {
                     className="sr-only"
                     aria-label={template.name}
                   />
+                  <div className={`mb-5 flex h-24 flex-col justify-between rounded-lg border p-3 ${active ? "border-white/20 bg-white/10" : "border-[#E4D6C0] bg-[#FFF9EE]"}`}>
+                    <span className={`h-px ${active ? "bg-white/25" : "bg-[#D7C7AE]"}`} />
+                    <span className={`h-px ${active ? "bg-white/25" : "bg-[#D7C7AE]"}`} />
+                    <span className={`h-px ${active ? "bg-white/25" : "bg-[#D7C7AE]"}`} />
+                    <span className={`ml-auto h-6 w-20 rounded-full ${active ? "bg-white/15" : "bg-[#F6EBD8]"}`} />
+                  </div>
                   <div className="flex items-center justify-between gap-4">
                     <p className={`text-xs uppercase tracking-[0.22em] ${active ? "text-stone-300" : "text-stone-500"}`}>
                       {template.scenario}
