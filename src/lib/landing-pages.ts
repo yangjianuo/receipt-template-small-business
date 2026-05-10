@@ -195,15 +195,15 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   home: withSeo({
     key: "home",
     pathname: "/",
-    title: "Receipt Template Generator for Small Business | Create Receipts Online",
+    title: "Free Receipt Template Generator | Editable & Printable Receipts",
     description:
-      "Create a free small business receipt online. Fill out business details, items, tax, and payment method, preview totals instantly, and generate a clean proof-of-payment receipt in minutes.",
-    heroEyebrow: "Free online receipt generator · Small business proof of payment · Live totals",
-    h1: "Free Receipt Template Generator for Small Business",
+      "Create free editable and printable receipt templates online for payments, rent, cash, services, and small business records with live totals and instant print preview.",
+    heroEyebrow: "Editable receipt template · Printable payment receipt · Rent and cash receipts",
+    h1: "Free Editable and Printable Receipt Template Generator",
     intro:
-      "Create a polished receipt in minutes. Fill in the business and customer details, update line items and tax, and generate a clear proof-of-payment receipt without leaving the page.",
+      "Create a polished editable receipt in minutes. Fill in payment, rent, cash, or small business details, update line items and tax, then print a clear proof-of-payment receipt without leaving the page.",
     supportingCopy:
-      "Built for storefront sales, freelance jobs, and local service businesses that need a broad receipt generator before narrowing into editable, printable, rent, cash, or service-specific templates.",
+      "Built for users comparing the highest-intent receipt workflows first: payment receipts, rent receipts, cash payment receipts, editable receipt templates, and printable receipt templates.",
     editorIntro:
       "Fill in the fields that matter, adjust your totals, and keep the receipt preview in sync as you type.",
     editorTip:
@@ -223,11 +223,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
       "Common questions about creating, filling out, and printing a small business receipt template.",
     ctaHeading: "Create your receipt online in minutes",
     ctaCopy:
-      "Pick a layout, fill in the details, and use the finished receipt for fast customer handoff, bookkeeping, or internal records.",
+      "Pick the receipt type that matches the payment, fill in the details, and print or save the finished receipt for customer handoff, bookkeeping, or internal records.",
     reassurancePoints: [
       "No signup wall or multi-step flow",
       "Live totals stay in sync while you edit",
-      "Broad fit for small business receipt workflows",
+      "Direct paths for payment, rent, cash, editable, and printable receipt intent",
     ],
     fields: [
       "Business name and contact details",
@@ -254,29 +254,29 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
     ],
     relatedPages: [
       {
-        href: "/payment-receipt-template",
-        label: "Payment receipt template",
-        description: "Create general proof-of-payment receipts with payer details, totals, and payment method fields.",
-      },
-      {
-        href: "/editable-receipt-template",
-        label: "Editable receipt template",
-        description: "Fill out receipt fields online when you want an edit-first workflow before printing.",
-      },
-      {
-        href: "/printable-receipt-template",
-        label: "Printable receipt template",
-        description: "Open the paper-ready receipt path when your priority is a clean layout to print immediately.",
-      },
-      {
         href: "/rent-receipt-template",
         label: "Rent receipt template",
-        description: "Track tenant, property, and month-covered details for recurring rent payments.",
+        description: "Create a printable rent payment receipt with tenant, landlord, amount, month-covered, and property details.",
+      },
+      {
+        href: "/payment-receipt-template",
+        label: "Payment receipt template",
+        description: "Create general proof-of-payment receipts with payer details, totals, purpose, and payment method fields.",
       },
       {
         href: "/cash-payment-receipt-template",
         label: "Cash payment receipt template",
-        description: "Show cash received, what it covered, and same-day proof-of-payment details clearly.",
+        description: "Show cash received, what it covered, payment date, and same-day proof-of-payment details clearly.",
+      },
+      {
+        href: "/editable-receipt-template",
+        label: "Editable receipt template",
+        description: "Fill out receipt fields online when you want a fillable, edit-first workflow before printing.",
+      },
+      {
+        href: "/printable-receipt-template",
+        label: "Printable receipt template",
+        description: "Open the paper-ready receipt path when your priority is a clean layout to fill out and print immediately.",
       },
       {
         href: "/service-receipt-template",
@@ -309,11 +309,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   "rent-receipt-template": withSeo({
     key: "rent-receipt-template",
     pathname: "/rent-receipt-template",
-    title: "Rent Receipt Template | Free Printable Rent Payment Receipt",
+    title: "Rent Receipt Template | Printable Rent Payment Receipt Online",
     description:
-      "Create a free rent receipt template online. Add tenant, landlord, payment period, amount, and notes, then print a clean rent payment receipt in minutes.",
+      "Create a printable rent receipt template online. Add tenant, landlord, property, payment period, amount, and notes, then print proof of rent paid in minutes.",
     heroEyebrow: "Rent payment receipt · Printable proof of rent paid · Fast fill-out",
-    h1: "Rent Receipt Template",
+    h1: "Printable Rent Receipt Template for Rent Payments",
     intro:
       "Use this rent receipt template to document monthly rent payments and hand tenants a clean proof-of-payment receipt right away.",
     supportingCopy:
@@ -377,6 +377,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
         answer:
           "Yes. Fill in the details in the editor, confirm the preview, and print the final rent receipt immediately.",
       },
+      {
+        question: "Can I use this rent receipt as proof of rent paid?",
+        answer:
+          "Yes. The template is designed to show tenant, landlord, amount, payment date, and period covered so it works as a clear proof-of-rent-payment record.",
+      },
     ],
     jumpLinks: [
       { href: "#editor", label: "Edit rent receipt" },
@@ -418,11 +423,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   "cash-payment-receipt-template": withSeo({
     key: "cash-payment-receipt-template",
     pathname: "/cash-payment-receipt-template",
-    title: "Cash Payment Receipt Template | Free Printable Cash Receipt",
+    title: "Cash Payment Receipt Template | Printable Cash Receipt Online",
     description:
-      "Create a free cash payment receipt template online. Add payer details, cash received, line items, and notes, then print a simple cash receipt for your records.",
+      "Create a printable cash payment receipt template online. Add payer details, cash received, line items, payment date, and notes, then print a clear cash receipt.",
     heroEyebrow: "Cash payment receipt · Printable proof of payment · Fast fill-out",
-    h1: "Cash Payment Receipt Template",
+    h1: "Printable Cash Payment Receipt Template",
     intro:
       "Use this cash payment receipt template to document in-person cash transactions and give customers a simple printed record of what they paid.",
     supportingCopy:
@@ -485,6 +490,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
         question: "Do I need to list items on a cash receipt?",
         answer:
           "Listing the product or service details is a good idea because it shows exactly what the cash payment was for.",
+      },
+      {
+        question: "Can I print a cash receipt right after editing it?",
+        answer:
+          "Yes. Fill out the cash payment details, review the live preview, and print a clean cash receipt from the browser.",
       },
     ],
     jumpLinks: [
@@ -745,11 +755,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   "payment-receipt-template": withSeo({
     key: "payment-receipt-template",
     pathname: "/payment-receipt-template",
-    title: "Payment Receipt Template | Free Printable Proof of Payment",
+    title: "Payment Receipt Template | Editable Printable Proof of Payment",
     description:
-      "Create a free payment receipt template online. Add payer, payment amount, line items, and payment method, then print clear proof of payment in minutes.",
+      "Create an editable payment receipt template online. Add payer, amount paid, purpose, line items, and payment method, then print clear proof of payment in minutes.",
     heroEyebrow: "Payment receipt template · Proof of payment · Fast printable workflow",
-    h1: "Payment Receipt Template",
+    h1: "Editable Payment Receipt Template for Proof of Payment",
     intro:
       "Use this payment receipt template when you need a general proof-of-payment document that is quick to edit, easy to print, and clear for both business records and customer handoff.",
     supportingCopy:
@@ -813,6 +823,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
         answer:
           "Yes. The live preview updates as you type, and you can print the payment receipt as soon as the details are ready.",
       },
+      {
+        question: "Is this payment receipt editable before printing?",
+        answer:
+          "Yes. You can edit payer details, payment method, notes, line items, tax, and totals before printing the proof-of-payment receipt.",
+      },
     ],
     jumpLinks: [
       { href: "#editor", label: "Edit payment receipt" },
@@ -854,11 +869,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   "editable-receipt-template": withSeo({
     key: "editable-receipt-template",
     pathname: "/editable-receipt-template",
-    title: "Editable Receipt Template | Fillable Receipt Generator Online",
+    title: "Editable Receipt Template | Fillable Receipt Template Online",
     description:
-      "Use a free editable receipt template online. Fill in receipt details, update totals instantly, and print a clean fillable receipt for small business use.",
+      "Use a free editable receipt template online. Fill in business, customer, payment, and line-item details, update totals instantly, and print a clean fillable receipt.",
     heroEyebrow: "Editable receipt template · Fillable online editor · Live preview",
-    h1: "Editable Receipt Template",
+    h1: "Editable Receipt Template to Fill Out and Print",
     intro:
       "Use this editable receipt template when you want to change business details, customer fields, line items, and totals directly in the browser before printing.",
     supportingCopy:
@@ -922,6 +937,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
         answer:
           "For many users, yes. Editing directly online is faster because you can customize the receipt and print it from the same workflow.",
       },
+      {
+        question: "Can I print the editable receipt after filling it out?",
+        answer:
+          "Yes. After editing the receipt fields online, review the live preview and print the completed receipt directly from the page.",
+      },
     ],
     jumpLinks: [
       { href: "#editor", label: "Edit receipt online" },
@@ -963,11 +983,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
   "printable-receipt-template": withSeo({
     key: "printable-receipt-template",
     pathname: "/printable-receipt-template",
-    title: "Printable Receipt Template | Free Receipt to Fill Out and Print",
+    title: "Printable Receipt Template | Fill Out and Print Online",
     description:
-      "Create a printable receipt template online. Fill in payment details, preview the final layout, and print a clean receipt for customers or internal records.",
+      "Create a printable receipt template online. Fill in payment details, line items, tax, and notes, preview the final layout, and print a clean receipt fast.",
     heroEyebrow: "Printable receipt template · Ready-to-print layout · Fast browser workflow",
-    h1: "Printable Receipt Template",
+    h1: "Printable Receipt Template to Fill Out Online",
     intro:
       "Use this printable receipt template when your main goal is to create a clean receipt layout that looks ready on paper as soon as you finish editing the fields.",
     supportingCopy:
@@ -1030,6 +1050,11 @@ export const landingPages: Record<ReceiptLandingPageKey, ReceiptLandingPageConfi
         question: "Can I use this printable receipt template for small business use?",
         answer:
           "Yes. It is designed for small business workflows where a clean, fast printable receipt matters.",
+      },
+      {
+        question: "Can I edit this printable receipt before printing?",
+        answer:
+          "Yes. Fill out the receipt fields online first, check the preview, and then print the finished receipt without a separate formatting tool.",
       },
     ],
     jumpLinks: [
